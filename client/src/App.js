@@ -9,7 +9,7 @@ import axios from 'axios';
 function App() {
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
-
+  const [URL, setURL] = useState("");
   const [data, setData] = useState({})
 
     useEffect(() => {
@@ -18,6 +18,17 @@ function App() {
       ).then(
         data => {
           setData(data)
+          console.log(data)
+        }
+      )
+    }, [title])
+
+    useEffect(() => {
+      fetch('/map').then(
+        res => res.json()
+      ).then(
+        data => {
+          setURL(data)
           console.log(data)
         }
       )
@@ -75,6 +86,12 @@ function HandleSubmit() {
          </div>
       </div>
       <div className='flex'>
+      {
+      /*map block*/
+      <div>
+        <img width="250" height="150" src={URL.address}></img>
+      </div>
+      }
       {/*weather block*/
       <div className=' bg-black ml-9 mt-[3%] p-3 rounded-md text-red-50'>City: {data.city}<br/>Temperature:  {data.temperature}°C<br/>Humidity: {data.humidity}%<br/>Description: {data.description}</div>
       }
