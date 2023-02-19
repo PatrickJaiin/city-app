@@ -7,8 +7,10 @@ import Forms2 from './form2.js';
 import axios from 'axios';
 
 function App() {
+  const [text, setText] = useState("");
+  const [title, setTitle] = useState("");
 
-  const [data, setData] = useMemo(() => {},[]);
+  const [data, setData] = useState({})
 
     useEffect(() => {
       fetch('/weather').then(
@@ -19,9 +21,8 @@ function App() {
           console.log(data)
         }
       )
-    },[data])
-  
-const [title, setTitle] = useState("");
+    }, [title])
+
 // function makePostRequest(path, title) {
 //     axios.post(path, { name: title }).then(
 //         (response) => {
@@ -38,9 +39,19 @@ function HandleClick() {
     fetch('/weather', { 
     method: 'POST', 
     mode: 'no-cors', 
-    body: JSON.stringify({title: title}),
+    body: JSON.stringify({title: text}),
    })
   }
+function update(){
+  HandleClick();
+  setTitle(text);
+  console.log(title);
+}
+function HandleSubmit() {
+  HandleClick();
+  update();
+}
+
   return (
     <div className=''>
       {/*heading*/}
@@ -52,20 +63,20 @@ function HandleClick() {
         </nav>      
       </div>
       <div className='mt-6'>
-        <div className='flex justify-center text-xs'>Search for a city</div>
-        <div>
+        <div className='flex justify-center mt-[6%]'>
+          <div className='border border-black rounded-md p-2'>
             <input 
-                placeholder="movie title"
-                value={title}
-                onChange={e => setTitle(e.target.value)}
+                placeholder="Search for a city"
+                value={text}
+                onChange={e=>setText(e.target.value)}
             />
-            <button type='submit' onClick={HandleClick}>Submit</button>
-            <button type='submit' onClick={App}>Refresh</button>
-        </div>
+            <button type='submit' onClick={update} className=''>Submit</button>
+          </div>
+         </div>
       </div>
       <div className='flex'>
       {/*weather block*/
-      <div className=' bg-black ml-9 mt-[20%] p-3 rounded-md text-red-50'>City: {data.city}<br/>Temperature:  {data.temperature}<br/>Humidity: {data.humidity}<br/>Description: {data.description}</div>
+      <div className=' bg-black ml-9 mt-[3%] p-3 rounded-md text-red-50'>City: {data.city}<br/>Temperature:  {data.temperature}°C<br/>Humidity: {data.humidity}%<br/>Description: {data.description}</div>
       }
       </div>
     </div>
