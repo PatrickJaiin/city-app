@@ -2,9 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { useState, useEffect, useMemo } from 'react';
-import Forms2 from './form2.js';
-import axios from 'axios';
+import { Suspense, useState, useEffect, useMemo } from 'react';
 
 function App() {
   const [text, setText] = useState("");
@@ -33,7 +31,7 @@ function App() {
         }
       )
     }, [title])
-
+    
 // function makePostRequest(path, title) {
 //     axios.post(path, { name: title }).then(
 //         (response) => {
@@ -67,36 +65,37 @@ function HandleSubmit() {
     <div className=''>
       {/*heading*/}
       <div className='flex justify-around'>
-        <a className=''>Shiv Gupta</a>
+        <a className=' hover:animate-bounce'>Shiv Gupta</a>
         <nav className = ' flex-row'>
           <a className=' pr-20'>About</a>
           <a className=''>Dashboard</a>
         </nav>      
       </div>
-      <div className='mt-6'>
-        <div className='flex justify-center mt-[6%]'>
-          <div className='border border-black rounded-md p-2'>
+      <div className=''>
+        <div className='flex justify-between mt-[3%]'>
+        {
+        /*map block*/
+        <div className=' ml-3'>
+          <img width="250" height="150" src={URL.address}></img>
+        </div>
+        }
+        <div className= 'w-full'>
+          <div className='border border-black rounded-md p-2 w-[50%] ml-3 flex justify-around hover:animate-bounce '>
             <input 
+                className=' w-[80%]'
                 placeholder="Search for a city"
                 value={text}
                 onChange={e=>setText(e.target.value)}
             />
             <button type='submit' onClick={update} className=''>Submit</button>
-          </div>
          </div>
-      </div>
-      <div className='flex'>
-      {
-      /*map block*/
-      <div>
-        <img width="250" height="150" src={URL.address}></img>
-      </div>
-      }
-      {/*weather block*/
-      <div className=' bg-black ml-9 mt-[3%] p-3 rounded-md text-red-50'>City: {data.city}<br/>Temperature:  {data.temperature}°C<br/>Humidity: {data.humidity}%<br/>Description: {data.description}</div>
-      }
+          {/*weather block*/
+          <div className=' bg-black ml-9 mt-[3%] p-3 rounded-md text-red-50 w-[20%]'>City: {data.city}<br/>Temperature:  {data.temperature}°C<br/>Humidity: {data.humidity}%<br/>Description: {data.description}</div>
+          }
+        </div>
       </div>
     </div>
+  </div>
   );
 }
 export default App;

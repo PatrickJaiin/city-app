@@ -8,6 +8,10 @@ CORS(app)
 global CITY
 CITY='Delhi'
 
+@app.route('/places',methods=['GET','POST'])
+def places():
+    API_KEY_PLACES="5ae2e3f221c38a28845f05b6f20683a58dac74bb8060a43f2359e521"
+
 @app.route('/map',methods=['GET','POST'])
 def map():
     API_KEY_MAP="3fe14d787681486290ff5495df61040c"
